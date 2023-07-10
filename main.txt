@@ -1,1 +1,26 @@
-1. Do the CI
+1. Do the CI and upload the image to dockerhub
+
+2. Install Argocd
+
+    kubectl create namespace argocd
+    kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+
+    kubectl get all -n argocd
+
+    curl -sSL -o argocd-linux-amd64 https://github.com/argoproj/argo-cd/releases/latest/download/argocd-linux-amd64
+    sudo install -m 555 argocd-linux-amd64 /usr/local/bin/argocd
+    rm argocd-linux-amd64
+
+
+    kubectl patch svc argocd-server -n argocd -p '{"spec": {"type": "NodePort"}}'
+
+
+    Allow the node port on sg
+
+    Login:
+        username: admin
+        Get the password
+        kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d
+
+
+
