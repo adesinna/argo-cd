@@ -18,7 +18,7 @@ pipeline {
 
         stage('Checkout SCM') {
             steps {
-                git credentialsId: 'github', url: 'https://github.com/adesinna/backend-project.git', branch: 'master'
+                git credentialsId: 'github', url: 'https://github.com/adesinna/argo-cd.git', branch: 'main'
             }
         }
 
