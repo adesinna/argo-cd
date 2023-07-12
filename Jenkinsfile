@@ -48,5 +48,22 @@ pipeline {
             }
         }
 
+        stage("Update the deployment on repo") {
+            steps{
+                script{
+                    sh """
+                        sed -i 's/${APP_NAME}.*/${APP_NAME}:${IMAGE_TAG}/g' deployment.yaml
+                        git config --global user.name "adesinna"
+                        git config --global user.email "aladesaea@yahoo.com"
+                        git add .
+                        git commit -m "updated deployment"
+                    """
+
+                    withCredentials([gitUsernamePassword(credentialsId: 'github', gitToolName: 'Default')]) {
+                        sh "git push https://github.com/adesinna/argo-cd.git main"
+                    }
+                }
+            }
+        }
     }
 }

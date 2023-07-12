@@ -11,16 +11,19 @@
     sudo install -m 555 argocd-linux-amd64 /usr/local/bin/argocd
     rm argocd-linux-amd64
 
-
     kubectl patch svc argocd-server -n argocd -p '{"spec": {"type": "NodePort"}}'
 
+    kubectl get svc -n argocd # use the port to access it
 
-    Allow the node port on sg
 
-    Login:
-        username: admin
-        Get the password
-        kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d
+    argocd admin initial-password -n argocd # to get your password
 
+=========
+Webhook:
+    This will allow the pipeline to run when there is a push
+
+    go to the repo > settings > webhook
+
+    http://54.176.181.8:8080/github-webhook/
 
 
