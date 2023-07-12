@@ -18,7 +18,7 @@ pipeline {
 
         stage('Checkout SCM') {
             steps {
-                git credentialsId: 'github', url: 'https://github.com/adesinna/argo-cd.git', branch: 'main'
+                git credentialsId: 'github', url: 'https://github.com/adesinna/argo-cd.git', branch: 'dev'
             }
         }
 
@@ -60,7 +60,7 @@ pipeline {
                     """
 
                     withCredentials([gitUsernamePassword(credentialsId: 'github', gitToolName: 'Default')]) {
-                        sh "git push https://github.com/adesinna/argo-cd.git main"
+                        sh "git push https://github.com/adesinna/argo-cd.git dev"
                     }
                 }
             }
