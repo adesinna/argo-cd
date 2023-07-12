@@ -46,7 +46,3 @@ Method 1:
     Now create a webhook with Pull Request and unclick the pushes
         http://54.176.181.8:8080/generic-webhook-trigger/invoke?token=github
 
-
-
-    Fakke kdnkdn
-
