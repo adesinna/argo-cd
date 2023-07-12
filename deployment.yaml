@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: flask-app-container
-        image: adesinna/flask-application:2
+        image: adesinna/flask-application:3
         ports:
         - containerPort: 5000
 ---
