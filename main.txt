@@ -1,28 +1,29 @@
-1. Do the CI and upload the image to dockerhub
+In a push model, you have ton grant the ci tool, kubeconfig file and access to be able to access the cluster, also
+the cicd has to have kubectl and helm in other to deploy and this cloud be a security concern.
 
-2. Install Argocd
+This is where argocd comes in, this is how argocd works.
 
-    kubectl create namespace argocd
-    kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+The ci tools will manage
 
-    kubectl get all -n argocd
+Build -- Test -- Docker Build -- Push to Registry -- Update the kubernetes image tag
 
-    curl -sSL -o argocd-linux-amd64 https://github.com/argoproj/argo-cd/releases/latest/download/argocd-linux-amd64
-    sudo install -m 555 argocd-linux-amd64 /usr/local/bin/argocd
-    rm argocd-linux-amd64
+There is no access to the cluster by the ci tool, argocd will pull the image from the repo, argocd agent keeps
+watching the repo for any change. It keeps tracking the changes and reconcile the changes to update it into the cluster.
 
-    kubectl patch svc argocd-server -n argocd -p '{"spec": {"type": "NodePort"}}'
+You will be the state visibility of the cluster, health status , current status.  It is also easy to rollback
 
-    kubectl get svc -n argocd # use the port to access it
+Concepts in argocd:
+Application:
+    This consist of two things source of manifest(git) and the destination cluster.
+
+Projects:
+    This is a logical grouping of your applications, this is useful when argocd is used by multiple teams.
+
+Desired State vs Actual State:
+    Desired is what is on your github and the actual state is what is running on your cluster.
 
 
-    argocd admin initial-password -n argocd # to get your password
+Sync:
+    This is the process of making the actual state to be what is desired
 
-=========
-Webhook:
-    This will allow the pipeline to run when there is a push
-
-    go to the repo > settings > webhook
-
-    http://54.176.181.8:8080/github-webhook/
 

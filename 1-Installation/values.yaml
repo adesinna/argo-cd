@@ -1,0 +1,11 @@
+# argocd-values.yaml
+configs:
+  params:
+    # 1. Run Argo CD server without internal TLS (HTTP)
+    # This allows your Gateway to talk to it without complex certs inside the cluster.
+    server.insecure: true
+
+server:
+  ingress:
+    # 2. Disable the legacy Ingress (we are using Gateway API instead)
+    enabled: false
